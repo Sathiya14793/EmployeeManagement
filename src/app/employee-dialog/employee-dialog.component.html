@@ -1,0 +1,37 @@
+<h1 mat-dialog-title> {{status}} Student</h1>
+<div mat-dialog-content class="popup" style="width: 380px; max-width: 98%;">
+  <form [formGroup]="EmployeeDialogForm">
+ 
+  <div>
+	<mat-form-field appearance="outline"> 
+		<mat-label>Name</mat-label>
+		<input matInput (keypress)="removespcialcharactersandnumbers($event)" formControlName="Name">
+  </mat-form-field>
+</div>
+<div>
+<mat-form-field appearance="outline">
+  <mat-label>Age</mat-label>
+  <input matInput (keypress)="onlyintegers($event)" maxlength="2" formControlName="Age">
+</mat-form-field>
+</div>
+	
+<div>
+  <mat-form-field appearance="outline" >
+    <mat-label>Address</mat-label>
+    <textarea matInput formControlName="Address" style="height: 80px;"></textarea>  
+</mat-form-field>
+</div>
+<div>
+<mat-form-field appearance="outline">
+  <mat-label>Contact</mat-label>
+  <input matInput (keypress)="onlyintegers($event)" maxlength="10" formControlName="Contact">
+</mat-form-field>
+</div>
+</form>
+</div>
+<div [ngClass]="{'warning': value === 'warning', 'error':value === 'error', 'success':value === 'success' }">{{errormsg}}</div>
+<div mat-dialog-actions style="justify-content: flex-end;">
+  <button mat-button mat-raised-button color="primary" (click)="SaveStudentData()">Save</button>
+  <button mat-button mat-raised-button color="warn" (click)="Close()">Cancel</button>
+	<!-- <button mat-button [mat-dialog-close]="data.animal" cdkFocusInitial>Ok</button> -->
+</div>
