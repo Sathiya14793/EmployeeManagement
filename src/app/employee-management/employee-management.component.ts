@@ -18,7 +18,7 @@ export class EmployeeManagementComponent implements OnInit {
 
   constructor(private dialog: MatDialog, private empService: EmployeeserviceService) {
     this.columnDefs = [
-      { field: 'SNo', valueFormatter: (params) => (params.node.childIndex + 1), sortable: true, width: 60, resizable: true },
+      { field: 'SNo', valueFormatter: (params) => (params.node.childIndex + 1), sortable: true, width: 80, resizable: true },
       { field: 'Id', sortable: true, width: 60, resizable: true },
       { field: 'Name', sortable: true, resizable: true, cellStyle: { color: 'blue', 'cursor': 'pointer' } },
       { field: 'Age', sortable: true, resizable: true },
