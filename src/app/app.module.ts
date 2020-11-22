@@ -11,12 +11,14 @@ import {AngularMaterialModule} from './angular-material/angular-material.module'
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     EmployeeManagementComponent,
-    EmployeeDialogComponent
+    EmployeeDialogComponent,
+    ConfirmDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -31,6 +33,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
   ],
   providers: [],
   bootstrap: [AppComponent],
-  entryComponents: [EmployeeDialogComponent],
+  entryComponents: [EmployeeDialogComponent,ConfirmDialogComponent],
 })
 export class AppModule { }

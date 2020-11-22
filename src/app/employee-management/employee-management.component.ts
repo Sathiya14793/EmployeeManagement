@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material';
 import { IEmployee, EmployeeserviceService } from '../services/employeeservice.service';
 import { EmployeeDialogComponent } from '../employee-dialog/employee-dialog.component';
+import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-employee-management',
@@ -18,15 +19,19 @@ export class EmployeeManagementComponent implements OnInit {
 
   constructor(private dialog: MatDialog, private empService: EmployeeserviceService) {
     this.columnDefs = [
-      { field: 'SNo', valueFormatter: (params) => (params.node.childIndex + 1), sortable: true, width: 80, resizable: true },
-      { field: 'Id', sortable: true, width: 60, resizable: true },
+      { field: 'SNo', valueFormatter: (params) => (params.node.childIndex + 1),  width: 80, resizable: true },
       { field: 'Name', sortable: true, resizable: true, cellStyle: { color: 'blue', 'cursor': 'pointer' } },
-      { field: 'Age', sortable: true, resizable: true },
-      { field: 'Address', sortable: true, width: 380, resizable: true },
-      { field: 'Contact', sortable: true, resizable: true },
+      { field: 'Id',headerName: 'Emp. Id', sortable: true, width: 100, resizable: true },
+      { field: 'Age', sortable: true,width: 100, resizable: true },
+      { field: 'Address', width: 280, resizable: true },
+      { field: 'Contact',  resizable: true },
       {
-        field: 'Delete', valueFormatter: (params) => "Delete", sortable: true, resizable: true, cellStyle: { color: 'Red', 'cursor': 'pointer' }
-      }
+        field: 'Edit', valueFormatter: (params) => "Update",  resizable: true, cellStyle: { color: 'Blue', 'cursor': 'pointer' }
+      },
+      {
+        field: 'Delete', valueFormatter: (params) => "Delete",  resizable: true, cellStyle: { color: 'Red', 'cursor': 'pointer' }
+      },
+      
     ];
   }
 
@@ -50,10 +55,11 @@ export class EmployeeManagementComponent implements OnInit {
     this.gridApi.setQuickFilter(this.searchtext);
   }
   CellClicked(params) {
+    
     if (params.colDef.field == "Delete") {
       this.DeleteEmployee(params);
     }
-    if (params.colDef.field == "Name") {
+    if (params.colDef.field == "Name" ||params.colDef.field == "Edit") {
       this.AddEmployee(params)
     }
   }
@@ -89,16 +95,30 @@ export class EmployeeManagementComponent implements OnInit {
   }
 
   DeleteEmployee(params) {
-    const data: IEmployee = params.data;
-    this.empService.deleteEmployeeById(data.Id).subscribe(
-      success => {
-        if (success) {
-          this.gridApi.applyTransaction({ remove: [params.data] });
-          this.gridApi.redrawRows()
-          alert("Employee deleted Successfully!")
-        }
+    const dialogConfirm = new MatDialogConfig();
+    dialogConfirm.disableClose = true;
+    dialogConfirm.autoFocus = true;
+    dialogConfirm.data = {
+      //id:ID,
+      title: 'Confirm',
+      content: 'Are you sure want to delete ? ',
+      actionType: 'delete'
+    };
+    const dialog = this.dialog.open(ConfirmDialogComponent, dialogConfirm);
+    dialog.afterClosed().subscribe(confirm => {
+      if (confirm) {
+        const data: IEmployee = params.data;
+        this.empService.deleteEmployeeById(data.Id).subscribe(
+          success => {
+            if (success) {
+              this.gridApi.applyTransaction({ remove: [params.data] });
+              this.gridApi.redrawRows()
+            }
+          }
+        )
       }
-    )
+    });
+   
   }
 
 }
