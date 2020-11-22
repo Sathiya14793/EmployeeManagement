@@ -20,16 +20,13 @@ export class EmployeeManagementComponent implements OnInit {
   constructor(private dialog: MatDialog, private empService: EmployeeserviceService) {
     this.columnDefs = [
       { field: 'SNo', valueFormatter: (params) => (params.node.childIndex + 1),  width: 80, resizable: true },
-      { field: 'Name', sortable: true, resizable: true, cellStyle: { color: 'blue', 'cursor': 'pointer' } },
       { field: 'Id',headerName: 'Emp. Id', sortable: true, width: 100, resizable: true },
+      { field: 'Name', sortable: true, resizable: true, cellStyle: { color: 'blue', 'cursor': 'pointer' } },
       { field: 'Age', sortable: true,width: 100, resizable: true },
-      { field: 'Address', width: 280, resizable: true },
+      { field: 'Address', width: 380, resizable: true },
       { field: 'Contact',  resizable: true },
       {
-        field: 'Edit', valueFormatter: (params) => "Update",  resizable: true, cellStyle: { color: 'Blue', 'cursor': 'pointer' }
-      },
-      {
-        field: 'Delete', valueFormatter: (params) => "Delete",  resizable: true, cellStyle: { color: 'Red', 'cursor': 'pointer' }
+        field: 'Action', valueFormatter: (params) => "Delete",  resizable: true, cellStyle: { color: 'Red', 'cursor': 'pointer' }
       },
       
     ];
@@ -56,10 +53,10 @@ export class EmployeeManagementComponent implements OnInit {
   }
   CellClicked(params) {
     
-    if (params.colDef.field == "Delete") {
+    if (params.colDef.field == "Action") {
       this.DeleteEmployee(params);
     }
-    if (params.colDef.field == "Name" ||params.colDef.field == "Edit") {
+    if (params.colDef.field == "Name") {
       this.AddEmployee(params)
     }
   }

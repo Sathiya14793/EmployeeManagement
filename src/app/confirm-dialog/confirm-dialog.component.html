@@ -2,7 +2,7 @@
 <div mat-dialog-content class="popup" style="width: 380px; max-width: 98%;">
  Are you sure you want to delete?
 </div>
-<div [ngClass]="{'warning': value === 'warning', 'error':value === 'error', 'success':value === 'success' }">{{errormsg}}</div>
+
 <div mat-dialog-actions style="justify-content: flex-end;">
   <button mat-button mat-raised-button color="primary" (click)="ConfirmDelete()">Ok</button>
   <button mat-button mat-raised-button color="warn" (click)="Close()">Cancel</button>
